@@ -1,0 +1,169 @@
+﻿<telerik:RadRibbonWindow x:Class="TrainService.MainWindow"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:local="clr-namespace:TrainService"
+                         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                         xmlns:converters="clr-namespace:TrainService.Converters"
+                         mc:Ignorable="d"
+                         WindowState="Maximized" Width="1280" Height="720">
+    <telerik:RadRibbonWindow.Resources>
+        <converters:TrainSeatFeatureConverter x:Key="TrainSeatFeatureConverter" />
+        <converters:DurationConverter x:Key="DurationConverter" />
+    </telerik:RadRibbonWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <telerik:RadRibbonView Grid.Row="0" MinimizeButtonVisibility="Visible">
+            <telerik:RadRibbonTab Header="普通查询">
+                <telerik:RadRibbonGroup Header="查询条件">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                                <TextBlock Text="起始站" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <telerik:RadAutoCompleteBox x:Name="FromStationInput" Width="100"
+                                                            SelectedItem="{Binding FromStation, Mode=TwoWay}"
+                                                            DisplayMemberPath="Name"
+                                                            SelectionMode="Single" TextSearchMode="StartsWith"
+                                                            AutoCompleteMode="Suggest" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="目的站" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <telerik:RadAutoCompleteBox x:Name="ToStationInput" Width="100"
+                                                            SelectedItem="{Binding ToStation, Mode=TwoWay}"
+                                                            DisplayMemberPath="Name"
+                                                            SelectionMode="Single" TextSearchMode="StartsWith"
+                                                            AutoCompleteMode="Suggest" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="出发日期" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <telerik:RadDatePicker x:Name="DepartureDateInput" Width="100"
+                                                       SelectedDate="{Binding QueryDate, Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="操作">
+                    <telerik:RadRibbonButton Content="查询" Size="Large"
+                                             LargeImage="Assets/Icons/Large/Query.png"
+                                             SmallImage="Assets/Icons/Small/Query.png"
+                                             VerticalContentAlignment="Center" Click="NormalQuery" />
+                </telerik:RadRibbonGroup>
+                <telerik:RadRibbonGroup Header="筛选">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel x:Name="FilterTypePanel" Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="车次类型" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <CheckBox x:Name="FilterG" Tag="CRHType" Content="GC-高铁/城际" Margin="0,0,5,0"
+                                      IsChecked="True" Click="FilterTypeClick" />
+                            <CheckBox x:Name="FilterD" Tag="CRHType" Content="D-动车" Margin="0,0,5,0" IsChecked="True"
+                                      Click="FilterTypeClick" />
+                            <CheckBox x:Name="FilterZ" Tag="NTType" Content="Z-直达" Margin="0,0,5,0" IsChecked="True"
+                                      Click="FilterTypeClick" />
+                            <CheckBox x:Name="FilterT" Tag="NTType" Content="T-特快" Margin="0,0,5,0" IsChecked="True"
+                                      Click="FilterTypeClick" />
+                            <CheckBox x:Name="FilterK" Tag="NTType" Content="K-快速" Margin="0,0,5,0" IsChecked="True"
+                                      Click="FilterTypeClick" />
+                            <CheckBox x:Name="FilterN" Tag="NTType" Content="其他" Margin="0,0,5,0" IsChecked="True"
+                                      Click="FilterTypeClick" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="座位类型" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <StackPanel x:Name="FilterSeatPanel" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <CheckBox x:Name="FilterGg" Tag="CRHSeat" Content="观光座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterSw" Tag="CRHSeat" Content="商务座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterTd" Tag="CRHSeat" Content="特等座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterZy" Tag="CRHSeat" Content="一等座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterZe" Tag="CRHSeat" Content="二等座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox x:Name="FilterGr" Tag="NTSeat" Content="高级软卧" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterYb" Tag="NTSeat" Content="硬卧包厢" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterRw" Tag="NTSeat" Content="软卧" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterYw" Tag="NTSeat" Content="硬卧" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterRz" Tag="NTSeat" Content="软座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterYz" Tag="NTSeat" Content="硬座" Margin="0,0,5,0"
+                                              IsChecked="True" Click="FilterSeatClick" />
+                                    <CheckBox x:Name="FilterWz" Content="无座" Margin="0,0,5,0" IsChecked="True"
+                                              Click="FilterSeatClick" />
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+                </telerik:RadRibbonGroup>
+            </telerik:RadRibbonTab>
+        </telerik:RadRibbonView>
+        <telerik:RadDocking Grid.Row="1">
+            <telerik:RadDocking.DocumentHost>
+                <telerik:RadSplitContainer>
+                    <telerik:RadPaneGroup>
+                        <telerik:RadPane Header="查询结果">
+                            <telerik:RadGridView x:Name="QueryResults"
+                                                 AutoGenerateColumns="False" IsReadOnly="True"
+                                                 ShowGroupPanel="False">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding StationTrainCode}"
+                                                                Header="车次" HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding StartTime}"
+                                                                DataFormatString="HH:mm" Header="出发时间"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ArriveTime}"
+                                                                DataFormatString="HH:mm" Header="到达时间"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn
+                                        DataMemberBinding="{Binding DurationMinutes, Converter={StaticResource DurationConverter}}"
+                                        Header="历时" HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn
+                                        DataMemberBinding="{Binding TrainSeatFeature, Converter={StaticResource TrainSeatFeatureConverter}}"
+                                        Header="空调" HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding CanWebBuy}" Header="可订票"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding GuanGuang}" Header="观光座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ShangWu}" Header="商务座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding TeDeng}" Header="特等座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding YiDeng}" Header="一等座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ErDeng}" Header="二等座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding GaoRuan}" Header="高级软卧"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding RuanWo}" Header="软卧"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding YingWoBaoXiang}"
+                                                                Header="硬卧包厢" HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding YingWo}" Header="硬卧"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding RuanZuo}" Header="软座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding YingZuo}" Header="硬座"
+                                                                HeaderTextAlignment="Center" />
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding WuZuo}" Header="无座"
+                                                                HeaderTextAlignment="Center" />
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </telerik:RadPane>
+                    </telerik:RadPaneGroup>
+                </telerik:RadSplitContainer>
+            </telerik:RadDocking.DocumentHost>
+        </telerik:RadDocking>
+    </Grid>
+</telerik:RadRibbonWindow>
