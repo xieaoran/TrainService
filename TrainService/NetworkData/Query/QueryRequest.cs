@@ -75,10 +75,10 @@ namespace TrainService.NetworkData.Query
         {
             return new Dictionary<string, object>
             {
-                {"purpose_codes", PurposeCodes},
-                {"queryDate", QueryDate.ToString("yyyy-MM-dd")},
-                {"from_station", FromStation.Code},
-                {"to_station", ToStation.Code}
+                {"leftTicketDTO.train_date", QueryDate.ToString("yyyy-MM-dd")},
+                {"leftTicketDTO.from_station", FromStation.Code},
+                {"leftTicketDTO.to_station", ToStation.Code},
+                {"purpose_codes", PurposeCodes}
             };
         }
 

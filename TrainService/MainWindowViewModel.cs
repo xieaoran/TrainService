@@ -12,12 +12,12 @@ namespace TrainService
         public MainWindowViewModel()
         {
             QueryRequest = new QueryRequest();
-            QueryResult = new List<TrainData>();
+            QueryResult = new TrainData[0];
             ShowResult = new ObservableCollection<TrainData>();
         }
 
         public QueryRequest QueryRequest { get; set; }
-        public IList<TrainData> QueryResult { get; set; }
+        public IEnumerable<TrainData> QueryResult { get; set; }
         public ObservableCollection<TrainData> ShowResult { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 

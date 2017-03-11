@@ -2,12 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace TrainService.Converters
+namespace TrainService.Converters.Ui
 {
     public class DurationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             var duration = (int) value;
             var hours = duration/60;
             var minutes = duration - hours*60;
@@ -16,6 +17,7 @@ namespace TrainService.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             var durationString = (string) value;
             var durationSubStrings = durationString.Split(':');
             var hours = int.Parse(durationSubStrings[0]);

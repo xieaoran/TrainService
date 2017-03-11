@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.Net;
+using System.Windows;
 using TrainService.LocalData;
+using TrainService.Policies;
 
 namespace TrainService
 {
@@ -11,6 +13,7 @@ namespace TrainService
         public App()
         {
             Runtime.Load();
+            ServicePointManager.ServerCertificateValidationCallback = CertificateValidation.ValidateServerCertificate;
         }
     }
 }

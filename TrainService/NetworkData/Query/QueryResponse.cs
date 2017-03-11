@@ -13,9 +13,9 @@ namespace TrainService.NetworkData.Query
         public int HttpStatus { get; set; }
 
         [JsonProperty(PropertyName = "messages")]
-        public IList<string> Messages { get; set; }
+        public IEnumerable<string> Messages { get; set; }
 
         [JsonProperty(PropertyName = "data")]
-        public TrainDatas Data { get; set; }
+        public IEnumerable<TrainDataItem> Data { get; set; }
     }
 }

@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace TrainService.Converters
+namespace TrainService.Converters.Json
 {
-    public class TimeConverter : DateTimeConverterBase
+    public class PlainTimeConverter : DateTimeConverterBase
     {
-        private static IsoDateTimeConverter _converter = new IsoDateTimeConverter {DateTimeFormat = "HH:mm"};
+        private static IsoDateTimeConverter _converter = new IsoDateTimeConverter { DateTimeFormat = "HHmm" };
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)

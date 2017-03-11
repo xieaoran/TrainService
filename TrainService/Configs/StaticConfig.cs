@@ -7,7 +7,7 @@ namespace TrainService.Configs
     public static class StaticConfig
     {
         public const string PostContentType = "application/json";
-        public const string QueryApi = "https://kyfw.12306.cn/otn/lcxxcx/query";
+        public const string QueryApi = "https://kyfw.12306.cn/otn/leftTicket/query";
         public const int Timeout = 10000;
 
         public static JsonSerializerSettings JsonSerializeSettings = new JsonSerializerSettings

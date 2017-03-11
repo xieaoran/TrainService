@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using TrainService.Converters;
+using TrainService.Converters.Json;
+using TrainService.Converters.Ui;
 
 namespace TrainService.NetworkData.Query
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class TrainDatas
+    public class TrainDataItem
     {
-        [JsonProperty(PropertyName = "flag")]
-        public bool Flag { get; set; }
+        [JsonProperty(PropertyName = "secretStr")]
+        public string SecretString { get; set; }
 
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
-
-        [JsonProperty(PropertyName = "datas")]
-        public IList<TrainData> Datas { get; set; }
+        [JsonProperty(PropertyName = "queryLeftNewDTO")]
+        public TrainData Data { get; set; }
     }
 
     [JsonObject(MemberSerialization.OptIn)]
@@ -75,13 +74,97 @@ namespace TrainService.NetworkData.Query
         [JsonProperty(PropertyName = "day_difference")]
         public int DayDifference { get; set; }
 
-        // 历时
-        [JsonProperty(PropertyName = "lishiValue")]
-        public int DurationMinutes { get; set; }
+        // TODO: 列车类型 - 待确定
+        [JsonProperty(PropertyName = "train_class_name")]
+        public string TrainClassName { get; set; }
+
+        // 历时 - HH:mm
+        [JsonProperty(PropertyName = "lishi")]
+        [JsonConverter(typeof(TimeSpanConverter))]
+        public TimeSpan Duration { get; set; }
 
         // 是否可在线预订
         [JsonProperty(PropertyName = "canWebBuy")]
         public string CanWebBuy { get; set; }
+
+        // 历时 - 分钟数
+        [JsonProperty(PropertyName = "lishiValue")]
+        public int DurationMinutes { get; set; }
+
+        // TODO: 余票信息 - 待确定
+        [JsonProperty(PropertyName = "yp_info")]
+        public string LeftTicketsInfo { get; set; }
+
+        // 管制日期
+        [JsonProperty(PropertyName = "control_train_day")]
+        [JsonConverter(typeof(DateConverter))]
+        public DateTime ControlTrainDay { get; set; }
+
+        // 开车日期
+        [JsonProperty(PropertyName = "start_train_date")]
+        [JsonConverter(typeof(DateConverter))]
+        public DateTime StartTrainDate { get; set; }
+
+        // TODO: 座位特征 - 待确定
+        [JsonProperty(PropertyName = "seat_feature")]
+        public string SeatFeature { get; set; }
+
+        // TODO: ?? - 待确定
+        [JsonProperty(PropertyName = "yp_ex")]
+        public int LeftTicketsEx { get; set; }
+
+        // 有无空调 - 无空调 0 | 有空调 3
+        [JsonProperty(PropertyName = "train_seat_feature")]
+        public int TrainSeatFeature { get; set; }
+
+        // TODO: 列车类型 - 待确定
+        [JsonProperty(PropertyName = "train_type_code")]
+        public int TrainTypeCode { get; set; }
+
+        // 始发站省份编号
+        [JsonProperty(PropertyName = "start_province_code")]
+        public int StartProvinceCode { get; set; }
+
+        // 始发站城市编号
+        [JsonProperty(PropertyName = "start_city_code")]
+        public int StartCityCode { get; set; }
+
+        // 终到站省份编号
+        [JsonProperty(PropertyName = "end_province_code")]
+        public int EndProvinceCode { get; set; }
+
+        // 终到站城市编号
+        [JsonProperty(PropertyName = "end_city_code")]
+        public int EndCityCode { get; set; }
+
+        // TODO: 座位类型 - 待确定
+        [JsonProperty(PropertyName = "seat_types")]
+        public int SeatTypes { get; set; }
+
+        // TODO: 地区编码 - 待确定
+        [JsonProperty(PropertyName = "location_code")]
+        public string LocationCode { get; set; }
+
+        // 起始站序号
+        [JsonProperty(PropertyName = "from_station_no")]
+        public int FromStationNumber { get; set; }
+
+        // 终到站序号
+        [JsonProperty(PropertyName = "to_station_no")]
+        public int ToStationNumber { get; set; }
+
+        // 预售期
+        [JsonProperty(PropertyName = "control_day")]
+        public int ControlDay { get; set; }
+
+        // 开始销售时间
+        [JsonProperty(PropertyName = "sale_time")]
+        [JsonConverter(typeof(PlainTimeConverter))]
+        public DateTime SaleTime { get; set; }
+
+        // TODO: 是否支持??卡 - 待确定
+        [JsonProperty(PropertyName = "is_support_card")]
+        public int SupportsCard { get; set; }
 
         // 是否被管制
         [JsonProperty(PropertyName = "controlled_train_flag")]
@@ -90,14 +173,6 @@ namespace TrainService.NetworkData.Query
         // 管制原因
         [JsonProperty(PropertyName = "controlled_train_message")]
         public string ControlledTrainMessage { get; set; }
-
-        // 有无空调 - 无空调 0 | 有空调 3
-        [JsonProperty(PropertyName = "train_seat_feature")]
-        public int TrainSeatFeature { get; set; }
-
-        // TODO:地区编码 - 待确定
-        [JsonProperty(PropertyName = "location_code")]
-        public string LocationCode { get; set; }
 
         // 观光座
         [JsonProperty(PropertyName = "gg_num")]

@@ -6,11 +6,12 @@
                          xmlns:local="clr-namespace:TrainService"
                          xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
                          xmlns:converters="clr-namespace:TrainService.Converters"
+                         xmlns:ui="clr-namespace:TrainService.Converters.Ui"
                          mc:Ignorable="d"
                          WindowState="Maximized" Width="1280" Height="720">
     <telerik:RadRibbonWindow.Resources>
-        <converters:TrainSeatFeatureConverter x:Key="TrainSeatFeatureConverter" />
-        <converters:DurationConverter x:Key="DurationConverter" />
+        <ui:TrainSeatFeatureConverter x:Key="TrainSeatFeatureConverter" />
+        <ui:DurationConverter x:Key="DurationConverter" />
     </telerik:RadRibbonWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
